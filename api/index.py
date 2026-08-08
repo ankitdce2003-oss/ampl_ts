@@ -43,6 +43,17 @@ def generate():
     other_conditions_precedent = [c.strip() for c in f.getlist("other_cp") if c.strip()]
     other_conditions_subsequent = [c.strip() for c in f.getlist("other_cs") if c.strip()]
 
+    CP_TOGGLES = [
+        "cp_constitutional_docs", "cp_kyc_documents", "cp_upfront_fee_payment",
+        "cp_security_deposit_payment", "cp_execution_of_docs", "cp_enach_rental",
+        "cp_enach_penalty", "cp_udc_residual_value", "cp_insurance_preapproval",
+    ]
+    CS_TOGGLES = [
+        "cs_insurance_renewal", "cs_pdi", "cs_brand_stickers",
+        "cs_quarterly_undertaking", "cs_original_rc", "cs_rc_hypothecation",
+    ]
+    cp_cs_context = {name: (f.get(name) == "on") for name in CP_TOGGLES + CS_TOGGLES}
+
     context = {
         "mou_date": f.get("mou_date", ""),
         "lessee_name": f.get("lessee_name", ""),
@@ -74,6 +85,7 @@ def generate():
         "lessee_signatory_name": f.get("lessee_signatory_name", ""),
         "other_conditions_precedent": other_conditions_precedent,
         "other_conditions_subsequent": other_conditions_subsequent,
+        **cp_cs_context,
     }
 
     tpl = DocxTemplate(TEMPLATE_PATH)
