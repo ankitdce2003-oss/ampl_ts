@@ -40,6 +40,9 @@ def generate():
     if others_text:
         included_items.append(others_text)
 
+    other_conditions_precedent = [c.strip() for c in f.getlist("other_cp") if c.strip()]
+    other_conditions_subsequent = [c.strip() for c in f.getlist("other_cs") if c.strip()]
+
     context = {
         "mou_date": f.get("mou_date", ""),
         "lessee_name": f.get("lessee_name", ""),
@@ -69,6 +72,8 @@ def generate():
         "rc_endorsement_days": f.get("rc_endorsement_days", ""),
         "lessor_signatory_name": f.get("lessor_signatory_name", ""),
         "lessee_signatory_name": f.get("lessee_signatory_name", ""),
+        "other_conditions_precedent": other_conditions_precedent,
+        "other_conditions_subsequent": other_conditions_subsequent,
     }
 
     tpl = DocxTemplate(TEMPLATE_PATH)

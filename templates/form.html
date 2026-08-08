@@ -314,6 +314,30 @@
     </fieldset>
 
     <fieldset>
+      <legend>Any Other Conditions Precedent</legend>
+      <div class="hint" style="margin-bottom:8px;">Add any deal-specific conditions precedent not already covered above. Leave empty if none.</div>
+      <div id="otherCP">
+        <div class="g-row">
+          <input type="text" name="other_cp" placeholder="e.g. Board approval of the Lessee for this transaction">
+          <button type="button" onclick="removeRow(this)">Remove</button>
+        </div>
+      </div>
+      <button type="button" onclick="addRow('otherCP', 'other_cp')">+ Add another condition precedent</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Any Other Conditions Subsequent</legend>
+      <div class="hint" style="margin-bottom:8px;">Add any deal-specific conditions subsequent not already covered above. Leave empty if none.</div>
+      <div id="otherCS">
+        <div class="g-row">
+          <input type="text" name="other_cs" placeholder="e.g. Submission of updated KYC annually">
+          <button type="button" onclick="removeRow(this)">Remove</button>
+        </div>
+      </div>
+      <button type="button" onclick="addRow('otherCS', 'other_cs')">+ Add another condition subsequent</button>
+    </fieldset>
+
+    <fieldset>
       <legend>Signatory (Astranova)</legend>
       <div class="row">
         <div class="field">
@@ -337,20 +361,24 @@ function toggleSection(name, show) {
   el.style.display = show ? '' : 'none';
   el.querySelectorAll('input[type=text]').forEach(inp => { inp.disabled = !show; });
 }
-function addRow() {
-  const container = document.getElementById('guarantors');
+function addRow(containerId, inputName) {
+  containerId = containerId || 'guarantors';
+  inputName = inputName || 'guarantor_name';
+  const container = document.getElementById(containerId);
   const row = document.createElement('div');
   row.className = 'g-row';
-  row.innerHTML = '<input type="text" name="guarantor_name" placeholder="Guarantor full name">' +
+  const placeholder = inputName === 'guarantor_name' ? 'Guarantor full name' : 'Describe the condition';
+  row.innerHTML = '<input type="text" name="' + inputName + '" placeholder="' + placeholder + '">' +
                   '<button type="button" onclick="removeRow(this)">Remove</button>';
   container.appendChild(row);
 }
 function removeRow(btn) {
-  const container = document.getElementById('guarantors');
+  const row = btn.closest('.g-row');
+  const container = row.parentElement;
   if (container.children.length > 1) {
-    btn.closest('.g-row').remove();
+    row.remove();
   } else {
-    btn.closest('.g-row').querySelector('input').value = '';
+    row.querySelector('input').value = '';
   }
 }
 </script>
