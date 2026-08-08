@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Astranova Mobility — MOU Generator</title>
+<style>
+  :root {
+    --navy: #0f2a4a;
+    --accent: #1c6ef2;
+    --border: #d7dde5;
+    --bg: #f5f7fa;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    margin: 0;
+    padding: 32px 16px 80px;
+    color: #1a1f29;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 {
+    font-size: 22px;
+    color: var(--navy);
+    margin: 0 0 4px;
+  }
+  .subtitle { color: #5b6472; font-size: 14px; margin: 0 0 28px; }
+  form {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px;
+  }
+  fieldset {
+    border: none;
+    border-top: 1px solid var(--border);
+    padding: 20px 0 4px;
+    margin: 0 0 4px;
+  }
+  fieldset:first-of-type { border-top: none; padding-top: 0; }
+  legend {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0;
+    margin-bottom: 14px;
+  }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
+  .field { flex: 1 1 220px; }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #333c48;
+  }
+  input[type=text], input[type=number] {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .hint { font-size: 12px; color: #8993a1; margin-top: 3px; }
+  #guarantors .g-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  #guarantors .g-row input { flex: 1; }
+  .g-row button {
+    background: #fff0f0;
+    color: #b42318;
+    border: 1px solid #f0c9c4;
+    border-radius: 6px;
+    padding: 0 12px;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  #addGuarantor {
+    background: #eef4ff;
+    color: var(--accent);
+    border: 1px solid #c8dcfb;
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  .submit-row { margin-top: 24px; text-align: right; }
+  button[type=submit] {
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    padding: 12px 26px;
+    font-size: 15px;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  button[type=submit]:hover { background: var(--accent); }
+  .disclaimer {
+    max-width: 760px;
+    margin: 18px auto 0;
+    font-size: 12px;
+    color: #8993a1;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Astranova Mobility — Term Sheet (MOU) Generator</h1>
+  <p class="subtitle">Fill in the deal-specific details below to generate a completed MOU Word document.</p>
+
+  <form action="/generate" method="post">
+
+    <fieldset>
+      <legend>Lessee Details</legend>
+      <div class="row">
+        <div class="field">
+          <label>MOU Date</label>
+          <input type="text" name="mou_date" placeholder="e.g. 8th August 2026" required>
+        </div>
+        <div class="field">
+          <label>Lessee Company Name</label>
+          <input type="text" name="lessee_name" placeholder="e.g. Dror Services Private Limited" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Lessee Address — Line 1</label>
+          <input type="text" name="lessee_address_line1" placeholder="Building, street">
+        </div>
+        <div class="field">
+          <label>Lessee Address — Line 2</label>
+          <input type="text" name="lessee_address_line2" placeholder="City, state, pincode">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Contact Person (greeting)</label>
+          <input type="text" name="lessee_contact_name" placeholder="e.g. Dhiraj Nauhbar" required>
+        </div>
+        <div class="field">
+          <label>Lessee Signatory (for signature block)</label>
+          <input type="text" name="lessee_signatory_name" placeholder="Name of Director signing">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Asset Details</legend>
+      <div class="row">
+        <div class="field">
+          <label>Number of Units</label>
+          <input type="text" name="num_units" placeholder="e.g. 7" required>
+        </div>
+        <div class="field">
+          <label>Asset Model</label>
+          <input type="text" name="asset_model" placeholder="e.g. Tata Tigor Express T" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>OEM Name</label>
+          <input type="text" name="oem_name" placeholder="e.g. Tata Motors Limited" required>
+        </div>
+        <div class="field">
+          <label>Asset Location</label>
+          <input type="text" name="asset_location" placeholder="e.g. NCR">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Commercial Terms</legend>
+      <div class="row">
+        <div class="field">
+          <label>Tenure (months)</label>
+          <input type="text" name="tenure_months" placeholder="e.g. 60" required>
+        </div>
+        <div class="field">
+          <label>Refundable Security Deposit (INR per asset)</label>
+          <input type="text" name="security_deposit" placeholder="e.g. 1,82,100" required>
+          <div class="hint">Also used for the UDC amount in Annexure I.</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Upfront Fee (INR per asset, + GST)</label>
+          <input type="text" name="upfront_fee" placeholder="e.g. 82,210" required>
+        </div>
+        <div class="field">
+          <label>Monthly Lease Rental (INR per asset, excl. GST)</label>
+          <input type="text" name="monthly_rental" placeholder="e.g. 27,075" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Penalty per day of delay (INR)</label>
+          <input type="text" name="penalty_per_day" value="100">
+        </div>
+        <div class="field">
+          <label>Max km / 12-month period</label>
+          <input type="text" name="max_km" value="50,000">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Condition Timelines</legend>
+      <div class="row">
+        <div class="field">
+          <label>Escrow account setup (days)</label>
+          <input type="text" name="escrow_days" value="30">
+        </div>
+        <div class="field">
+          <label>Original RC to Lessor (days)</label>
+          <input type="text" name="rc_send_days" value="60">
+        </div>
+        <div class="field">
+          <label>RC hypothecation endorsement (days)</label>
+          <input type="text" name="rc_endorsement_days" value="45">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Personal Guarantors</legend>
+      <div id="guarantors">
+        <div class="g-row">
+          <input type="text" name="guarantor_name" placeholder="Guarantor full name">
+          <button type="button" onclick="removeRow(this)">Remove</button>
+        </div>
+      </div>
+      <button type="button" id="addGuarantor" onclick="addRow()">+ Add another guarantor</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Signatory (Astranova)</legend>
+      <div class="row">
+        <div class="field">
+          <label>Lessor Signatory (Astranova Director)</label>
+          <input type="text" name="lessor_signatory_name" value="Kunal Mundra">
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="submit-row">
+      <button type="submit">Generate MOU (.docx)</button>
+    </div>
+  </form>
+  <p class="disclaimer">This tool auto-fills a standard MOU template for internal review and drafting purposes only. All generated documents must be reviewed by an authorized signatory / legal before being shared externally.</p>
+</div>
+
+<script>
+function addRow() {
+  const container = document.getElementById('guarantors');
+  const row = document.createElement('div');
+  row.className = 'g-row';
+  row.innerHTML = '<input type="text" name="guarantor_name" placeholder="Guarantor full name">' +
+                  '<button type="button" onclick="removeRow(this)">Remove</button>';
+  container.appendChild(row);
+}
+function removeRow(btn) {
+  const container = document.getElementById('guarantors');
+  if (container.children.length > 1) {
+    btn.closest('.g-row').remove();
+  } else {
+    btn.closest('.g-row').querySelector('input').value = '';
+  }
+}
+</script>
+</body>
+</html>
