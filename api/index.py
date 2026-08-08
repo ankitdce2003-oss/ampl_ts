@@ -22,6 +22,22 @@ def generate():
     f = request.form
 
     guarantors = [g.strip() for g in f.getlist("guarantor_name") if g.strip()]
+    has_personal_guarantee = f.get("has_personal_guarantee") == "on"
+    has_escrow = f.get("has_escrow") == "on"
+    include_insurance_first_year = f.get("include_insurance_first_year") == "on"
+
+    included_items = []
+    if f.get("include_rto") == "on":
+        included_items.append("RTO")
+    if f.get("include_iot") == "on":
+        included_items.append("IOT")
+    if f.get("include_vltd") == "on":
+        included_items.append("VLTD device")
+    if f.get("include_extended_warranty") == "on":
+        included_items.append("Extended warranty")
+    others_text = f.get("others_text", "").strip()
+    if others_text:
+        included_items.append(others_text)
 
     context = {
         "mou_date": f.get("mou_date", ""),
@@ -29,17 +45,22 @@ def generate():
         "lessee_address_line1": f.get("lessee_address_line1", ""),
         "lessee_address_line2": f.get("lessee_address_line2", ""),
         "lessee_contact_name": f.get("lessee_contact_name", ""),
-        "guarantors": guarantors,
+        "has_personal_guarantee": has_personal_guarantee,
+        "guarantors": guarantors if has_personal_guarantee else [],
         "num_units": f.get("num_units", ""),
         "asset_model": f.get("asset_model", ""),
         "oem_name": f.get("oem_name", ""),
         "asset_location": f.get("asset_location", ""),
+        "include_insurance_first_year": include_insurance_first_year,
+        "included_items": included_items,
         "tenure_months": f.get("tenure_months", ""),
         "security_deposit": f.get("security_deposit", ""),
+        "residual_value": f.get("residual_value", ""),
         "upfront_fee": f.get("upfront_fee", ""),
         "monthly_rental": f.get("monthly_rental", ""),
         "penalty_per_day": f.get("penalty_per_day", ""),
         "max_km": f.get("max_km", ""),
+        "has_escrow": has_escrow,
         "escrow_days": f.get("escrow_days", ""),
         "rc_send_days": f.get("rc_send_days", ""),
         "rc_endorsement_days": f.get("rc_endorsement_days", ""),

@@ -81,6 +81,26 @@
     cursor: pointer;
     font-size: 13px;
   }
+  .checklist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+  }
+  .toggle-row { margin-bottom: 14px; }
+  .toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1f29;
+    cursor: pointer;
+  }
+  .toggle-label input[type=checkbox] { width: 16px; height: 16px; margin: 0; }
   #addGuarantor {
     background: #eef4ff;
     color: var(--accent);
@@ -174,6 +194,23 @@
           <input type="text" name="asset_location" placeholder="e.g. NCR">
         </div>
       </div>
+
+      <label style="display:block; margin: 18px 0 8px; font-size:13px; font-weight:600; color:#333c48;">
+        Confirm which of the following are included in the Assets being leased:
+      </label>
+      <div class="checklist">
+        <label class="toggle-label"><input type="checkbox" name="include_insurance_first_year" checked> Insurance for first year</label>
+        <label class="toggle-label"><input type="checkbox" name="include_rto" checked> RTO</label>
+        <label class="toggle-label"><input type="checkbox" name="include_iot" checked> IOT</label>
+        <label class="toggle-label"><input type="checkbox" name="include_vltd" checked> VLTD device</label>
+        <label class="toggle-label"><input type="checkbox" name="include_extended_warranty" checked> Extended warranty</label>
+      </div>
+      <div class="row" style="margin-top: 10px;">
+        <div class="field">
+          <label>Others (specify, optional)</label>
+          <input type="text" name="others_text" placeholder="e.g. Fire extinguisher, first-aid kit">
+        </div>
+      </div>
     </fieldset>
 
     <fieldset>
@@ -186,7 +223,11 @@
         <div class="field">
           <label>Refundable Security Deposit (INR per asset)</label>
           <input type="text" name="security_deposit" placeholder="e.g. 1,82,100" required>
-          <div class="hint">Also used for the UDC amount in Annexure I.</div>
+        </div>
+        <div class="field">
+          <label>Residual Value / RV (INR per asset)</label>
+          <input type="text" name="residual_value" placeholder="e.g. 1,82,100" required>
+          <div class="hint">Used for the UDC amount in Annexure I, item 24 — this is the asset’s RV, not necessarily the same figure as the deposit.</div>
         </div>
       </div>
       <div class="row">
@@ -212,12 +253,20 @@
     </fieldset>
 
     <fieldset>
-      <legend>Condition Timelines</legend>
-      <div class="row">
+      <legend>Escrow Arrangement</legend>
+      <div class="toggle-row">
+        <label class="toggle-label">
+          <input type="checkbox" id="escrowToggle" name="has_escrow" checked onchange="toggleSection('escrow', this.checked)">
+          This transaction requires an escrow arrangement
+        </label>
+      </div>
+      <div class="row" id="escrowFields">
         <div class="field">
           <label>Escrow account setup (days)</label>
           <input type="text" name="escrow_days" value="30">
         </div>
+      </div>
+      <div class="row">
         <div class="field">
           <label>Original RC to Lessor (days)</label>
           <input type="text" name="rc_send_days" value="60">
@@ -231,13 +280,21 @@
 
     <fieldset>
       <legend>Personal Guarantors</legend>
-      <div id="guarantors">
-        <div class="g-row">
-          <input type="text" name="guarantor_name" placeholder="Guarantor full name">
-          <button type="button" onclick="removeRow(this)">Remove</button>
-        </div>
+      <div class="toggle-row">
+        <label class="toggle-label">
+          <input type="checkbox" id="pgToggle" name="has_personal_guarantee" checked onchange="toggleSection('pg', this.checked)">
+          This transaction requires personal guarantee(s)
+        </label>
       </div>
-      <button type="button" id="addGuarantor" onclick="addRow()">+ Add another guarantor</button>
+      <div id="pgFields">
+        <div id="guarantors">
+          <div class="g-row">
+            <input type="text" name="guarantor_name" placeholder="Guarantor full name">
+            <button type="button" onclick="removeRow(this)">Remove</button>
+          </div>
+        </div>
+        <button type="button" id="addGuarantor" onclick="addRow()">+ Add another guarantor</button>
+      </div>
     </fieldset>
 
     <fieldset>
@@ -258,6 +315,12 @@
 </div>
 
 <script>
+function toggleSection(name, show) {
+  const map = { escrow: 'escrowFields', pg: 'pgFields' };
+  const el = document.getElementById(map[name]);
+  el.style.display = show ? '' : 'none';
+  el.querySelectorAll('input[type=text]').forEach(inp => { inp.disabled = !show; });
+}
 function addRow() {
   const container = document.getElementById('guarantors');
   const row = document.createElement('div');
