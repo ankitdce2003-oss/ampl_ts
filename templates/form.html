@@ -298,6 +298,22 @@
     </fieldset>
 
     <fieldset>
+      <legend>Corporate Guarantee</legend>
+      <div class="toggle-row">
+        <label class="toggle-label">
+          <input type="checkbox" id="cgToggle" name="has_corporate_guarantee" onchange="toggleSection('cg', this.checked)">
+          This transaction requires a corporate guarantee
+        </label>
+      </div>
+      <div class="row" id="cgFields" style="display:none;">
+        <div class="field">
+          <label>Corporate Guarantor Name</label>
+          <input type="text" name="corporate_guarantor_name" placeholder="e.g. Parent Holdings Pvt Ltd" disabled>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
       <legend>Signatory (Astranova)</legend>
       <div class="row">
         <div class="field">
@@ -316,7 +332,7 @@
 
 <script>
 function toggleSection(name, show) {
-  const map = { escrow: 'escrowFields', pg: 'pgFields' };
+  const map = { escrow: 'escrowFields', pg: 'pgFields', cg: 'cgFields' };
   const el = document.getElementById(map[name]);
   el.style.display = show ? '' : 'none';
   el.querySelectorAll('input[type=text]').forEach(inp => { inp.disabled = !show; });

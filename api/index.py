@@ -23,6 +23,7 @@ def generate():
 
     guarantors = [g.strip() for g in f.getlist("guarantor_name") if g.strip()]
     has_personal_guarantee = f.get("has_personal_guarantee") == "on"
+    has_corporate_guarantee = f.get("has_corporate_guarantee") == "on"
     has_escrow = f.get("has_escrow") == "on"
     include_insurance_first_year = f.get("include_insurance_first_year") == "on"
 
@@ -47,6 +48,8 @@ def generate():
         "lessee_contact_name": f.get("lessee_contact_name", ""),
         "has_personal_guarantee": has_personal_guarantee,
         "guarantors": guarantors if has_personal_guarantee else [],
+        "has_corporate_guarantee": has_corporate_guarantee,
+        "corporate_guarantor_name": f.get("corporate_guarantor_name", "") if has_corporate_guarantee else "",
         "num_units": f.get("num_units", ""),
         "asset_model": f.get("asset_model", ""),
         "oem_name": f.get("oem_name", ""),
