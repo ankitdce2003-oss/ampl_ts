@@ -32,21 +32,21 @@
     border-radius: 10px;
     padding: 28px;
   }
-  fieldset {
-    border: none;
+  .section {
     border-top: 1px solid var(--border);
     padding: 20px 0 4px;
     margin: 0 0 4px;
   }
-  fieldset:first-of-type { border-top: none; padding-top: 0; }
-  legend {
+  .section:first-of-type { border-top: none; padding-top: 0; }
+  .section-title {
+    display: block;
     font-weight: 600;
     font-size: 14px;
     color: var(--navy);
     text-transform: uppercase;
     letter-spacing: 0.03em;
-    padding: 0;
-    margin-bottom: 14px;
+    margin: 0 0 14px;
+    line-height: 1.3;
   }
   .row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
   .field { flex: 1 1 220px; }
@@ -138,8 +138,8 @@
 
   <form action="/generate" method="post">
 
-    <fieldset>
-      <legend>Lessee Details</legend>
+    <div class="section">
+      <div class="section-title">Lessee Details</div>
       <div class="row">
         <div class="field">
           <label>MOU Date</label>
@@ -170,10 +170,10 @@
           <input type="text" name="lessee_signatory_name" placeholder="Name of Director signing">
         </div>
       </div>
-    </fieldset>
+    </div>
 
-    <fieldset>
-      <legend>Asset Details</legend>
+    <div class="section">
+      <div class="section-title">Asset Details</div>
       <div class="row">
         <div class="field">
           <label>Number of Units</label>
@@ -211,10 +211,10 @@
           <input type="text" name="others_text" placeholder="e.g. Fire extinguisher, first-aid kit">
         </div>
       </div>
-    </fieldset>
+    </div>
 
-    <fieldset>
-      <legend>Commercial Terms</legend>
+    <div class="section">
+      <div class="section-title">Commercial Terms</div>
       <div class="row">
         <div class="field">
           <label>Tenure (months)</label>
@@ -250,10 +250,10 @@
           <input type="text" name="max_km" value="50,000">
         </div>
       </div>
-    </fieldset>
+    </div>
 
-    <fieldset>
-      <legend>Escrow Arrangement</legend>
+    <div class="section">
+      <div class="section-title">Escrow Arrangement</div>
       <div class="toggle-row">
         <label class="toggle-label">
           <input type="checkbox" id="escrowToggle" name="has_escrow" checked onchange="toggleSection('escrow', this.checked)">
@@ -276,10 +276,10 @@
           <input type="text" name="rc_endorsement_days" value="45">
         </div>
       </div>
-    </fieldset>
+    </div>
 
-    <fieldset>
-      <legend>Personal Guarantors</legend>
+    <div class="section">
+      <div class="section-title">Personal Guarantors</div>
       <div class="toggle-row">
         <label class="toggle-label">
           <input type="checkbox" id="pgToggle" name="has_personal_guarantee" checked onchange="toggleSection('pg', this.checked)">
@@ -295,10 +295,10 @@
         </div>
         <button type="button" id="addGuarantor" onclick="addRow()">+ Add another guarantor</button>
       </div>
-    </fieldset>
+    </div>
 
-    <fieldset>
-      <legend>Corporate Guarantee</legend>
+    <div class="section">
+      <div class="section-title">Corporate Guarantee</div>
       <div class="toggle-row">
         <label class="toggle-label">
           <input type="checkbox" id="cgToggle" name="has_corporate_guarantee" onchange="toggleSection('cg', this.checked)">
@@ -311,10 +311,10 @@
           <input type="text" name="corporate_guarantor_name" placeholder="e.g. Parent Holdings Pvt Ltd" disabled>
         </div>
       </div>
-    </fieldset>
+    </div>
 
-    <fieldset>
-      <legend>Conditions Precedent</legend>
+    <div class="section">
+      <div class="section-title">Conditions Precedent</div>
       <div class="hint" style="margin-bottom:8px;">All standard conditions precedent are included by default — uncheck any that don't apply to this deal.</div>
       <div class="checklist" style="flex-direction:column; gap:8px;">
         <label class="toggle-label"><input type="checkbox" name="cp_constitutional_docs" checked> Copies of the constitutional documents (MOA, AOA, COI, GST, PAN) along with board resolutions</label>
@@ -327,10 +327,10 @@
         <label class="toggle-label"><input type="checkbox" name="cp_udc_residual_value" checked> UDCs from Lessee's current account for the Residual Value amount</label>
         <label class="toggle-label"><input type="checkbox" name="cp_insurance_preapproval" checked> Insurance terms pre-approved by Lessor (as loss payee)</label>
       </div>
-    </fieldset>
+    </div>
 
-    <fieldset>
-      <legend>Conditions Subsequent</legend>
+    <div class="section">
+      <div class="section-title">Conditions Subsequent</div>
       <div class="hint" style="margin-bottom:8px;">All standard conditions subsequent are included by default — uncheck any that don't apply to this deal.</div>
       <div class="checklist" style="flex-direction:column; gap:8px;">
         <label class="toggle-label"><input type="checkbox" name="cs_insurance_renewal" checked> Insurance renewal completed prior to expiry, copies shared within 3 days</label>
@@ -340,10 +340,10 @@
         <label class="toggle-label"><input type="checkbox" name="cs_original_rc" checked> Original RC sent to Lessor within the specified timeline</label>
         <label class="toggle-label"><input type="checkbox" name="cs_rc_hypothecation" checked> RC hypothecation/endorsement in favor of the Lessor within the specified timeline</label>
       </div>
-    </fieldset>
+    </div>
 
-    <fieldset>
-      <legend>Any Other Conditions Precedent</legend>
+    <div class="section">
+      <div class="section-title">Any Other Conditions Precedent</div>
       <div class="hint" style="margin-bottom:8px;">Add any deal-specific conditions precedent not already covered above. Leave empty if none.</div>
       <div id="otherCP">
         <div class="g-row">
@@ -352,10 +352,10 @@
         </div>
       </div>
       <button type="button" onclick="addRow('otherCP', 'other_cp')">+ Add another condition precedent</button>
-    </fieldset>
+    </div>
 
-    <fieldset>
-      <legend>Any Other Conditions Subsequent</legend>
+    <div class="section">
+      <div class="section-title">Any Other Conditions Subsequent</div>
       <div class="hint" style="margin-bottom:8px;">Add any deal-specific conditions subsequent not already covered above. Leave empty if none.</div>
       <div id="otherCS">
         <div class="g-row">
@@ -364,17 +364,17 @@
         </div>
       </div>
       <button type="button" onclick="addRow('otherCS', 'other_cs')">+ Add another condition subsequent</button>
-    </fieldset>
+    </div>
 
-    <fieldset>
-      <legend>Signatory (Astranova)</legend>
+    <div class="section">
+      <div class="section-title">Signatory (Astranova)</div>
       <div class="row">
         <div class="field">
           <label>Lessor Signatory (Astranova Director)</label>
           <input type="text" name="lessor_signatory_name" value="Kunal Mundra">
         </div>
       </div>
-    </fieldset>
+    </div>
 
     <div class="submit-row">
       <button type="submit">Generate MOU (.docx)</button>
