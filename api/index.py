@@ -11,6 +11,10 @@ TEMPLATES_DIR = os.path.join(os.path.dirname(BASE_DIR), "templates")
 
 app = Flask(__name__, template_folder=TEMPLATES_DIR)
 
+# Astranova's signatory on the MOU is always the same person — fixed here
+# rather than asked on the form each time.
+LESSOR_SIGNATORY_NAME = "Kunal Mundra"
+
 
 @app.route("/", methods=["GET"])
 def index():
@@ -81,7 +85,7 @@ def generate():
         "escrow_days": f.get("escrow_days", ""),
         "rc_send_days": f.get("rc_send_days", ""),
         "rc_endorsement_days": f.get("rc_endorsement_days", ""),
-        "lessor_signatory_name": f.get("lessor_signatory_name", ""),
+        "lessor_signatory_name": LESSOR_SIGNATORY_NAME,
         "lessee_signatory_name": f.get("lessee_signatory_name", ""),
         "other_conditions_precedent": other_conditions_precedent,
         "other_conditions_subsequent": other_conditions_subsequent,
